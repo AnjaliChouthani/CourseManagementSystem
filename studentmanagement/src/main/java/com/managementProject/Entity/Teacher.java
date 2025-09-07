@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Teacher {
+public class Teacher  extends Auditable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

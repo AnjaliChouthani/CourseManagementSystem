@@ -138,7 +138,8 @@ public class CourseService {
        responseDTO.setMeta(meta);
        return new ResponseEntity<>(responseDTO,HttpStatus.OK);
     }
-    }
+
+}
  //@Transactional
 //    public ResponseEntity<APIResponseDTO> assignedCourse(String courseTitle ,String email) {
 //             Optional<Courses>optionalCourses=courseRepository.findByTitle(courseTitle);

@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Student {
+public class Student  extends Auditable{
      @Id
      @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

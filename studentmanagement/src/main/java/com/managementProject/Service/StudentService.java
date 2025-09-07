@@ -7,6 +7,7 @@ import com.managementProject.DTO.StudentBasicDTO;
 import com.managementProject.DTO.StudentWithCourseDTO;
 import com.managementProject.Entity.Courses;
 import com.managementProject.Entity.Student;
+import com.managementProject.Exception.AppException;
 import com.managementProject.Repository.CourseRepository;
 import com.managementProject.Repository.StudentRepository;
 import jakarta.transaction.Transactional;
@@ -37,11 +38,13 @@ public class StudentService {
 
          Optional<Student> studentOptional= studentRepository.findByNameAndEmail(studentWithCourseDTO.getName(),studentWithCourseDTO.getEmail());
          if(studentOptional.isPresent()){
-              APIResponseDTO responseDTO=new APIResponseDTO();
-              responseDTO.setMessage("Already Exist Student with Name "+studentWithCourseDTO.getName()+" and Email "+studentWithCourseDTO.getEmail());
-              responseDTO.setError(true);
-              responseDTO.setMeta(new HashMap<>());
-              return new ResponseEntity<>(responseDTO,HttpStatus.OK);
+
+             throw new AppException("already exist student email ",HttpStatus.BAD_REQUEST,studentWithCourseDTO.getEmail());
+//              APIResponseDTO responseDTO=new APIResponseDTO();
+//              responseDTO.setMessage("Already Exist Student with Name "+studentWithCourseDTO.getName()+" and Email "+studentWithCourseDTO.getEmail());
+//              responseDTO.setError(true);
+//              responseDTO.setMeta(new HashMap<>());
+//              return new ResponseEntity<>(responseDTO,HttpStatus.OK);
          }
          //dto to entity
 
@@ -99,11 +102,13 @@ public class StudentService {
     public ResponseEntity<APIResponseDTO> getAllStudent() {
         List<Student>studentlist=studentRepository.findAll();
         if(studentlist.isEmpty()){
-            APIResponseDTO responseDTO=new APIResponseDTO();
-            responseDTO.setMessage("No student found ");
-            responseDTO.setError(true);
-            responseDTO.setMeta(new HashMap<>());
-            return new ResponseEntity<>(responseDTO, HttpStatus.NOT_FOUND);
+
+            throw new AppException("no student found ",HttpStatus.NOT_FOUND);
+//            APIResponseDTO responseDTO=new APIResponseDTO();
+//            responseDTO.setMessage("No student found ");
+//            responseDTO.setError(true);
+//            responseDTO.setMeta(new HashMap<>());
+//            return new ResponseEntity<>(responseDTO, HttpStatus.NOT_FOUND);
         }
         //if exist
        List<StudentWithCourseDTO>studentdto=studentlist.stream().map(
@@ -136,11 +141,12 @@ public class StudentService {
 
         Optional<Student> optionalStudent=studentRepository.findById(id);
         if(!optionalStudent.isPresent()){
-            APIResponseDTO responseDTO=new APIResponseDTO();
-            responseDTO.setMessage("not found any student with ID "+id);
-            responseDTO.setError(true);
-            responseDTO.setMeta(new HashMap<>());
-            return new ResponseEntity<>(responseDTO,HttpStatus.NOT_FOUND);
+            throw new AppException("not found any student  ",HttpStatus.NOT_FOUND,id);
+//            APIResponseDTO responseDTO=new APIResponseDTO();
+//            responseDTO.setMessage("not found any student with ID "+id);
+//            responseDTO.setError(true);
+//            responseDTO.setMeta(new HashMap<>());
+//            return new ResponseEntity<>(responseDTO,HttpStatus.NOT_FOUND);
         }
 
         //convert entity to dto for response
@@ -171,11 +177,12 @@ public class StudentService {
 
        Optional<Student>studentOptional= studentRepository.findByEmail(email);
        if(!studentOptional.isPresent()){
-           APIResponseDTO responseDTO=new APIResponseDTO();
-           responseDTO.setMeta(new HashMap<>());
-           responseDTO.setError(true);
-           responseDTO.setMessage("Can't Deleted, No Student Found with Email "+ email);
-           return new ResponseEntity<>(responseDTO,HttpStatus.NOT_FOUND);
+           throw new AppException("no student found ",HttpStatus.NOT_FOUND,email);
+//           APIResponseDTO responseDTO=new APIResponseDTO();
+//           responseDTO.setMeta(new HashMap<>());
+//           responseDTO.setError(true);
+//           responseDTO.setMessage("Can't Deleted, No Student Found with Email "+ email);
+//           return new ResponseEntity<>(responseDTO,HttpStatus.NOT_FOUND);
        }
        //if present delete from DB
         //entity to dto

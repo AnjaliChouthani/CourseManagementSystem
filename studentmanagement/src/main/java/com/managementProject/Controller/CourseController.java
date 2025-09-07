@@ -48,10 +48,10 @@ public class CourseController {
       return courseService.updateCourse(courseBasicDTO,title);
   }
 
-  //courseassignedtoteacher
-  @PostMapping("/assignedCourse")
-  public ResponseEntity<APIResponseDTO>assignedCourse(@RequestParam String courseTitle, @RequestParam String email){
-          return courseService.assignedCourse(courseTitle,email);
-  }
+//  //courseassignedtoteacher
+//  @PostMapping("/assignedCourse")
+//  public ResponseEntity<APIResponseDTO>assignedCourse(@RequestParam String courseTitle, @RequestParam String email){
+//          return courseService.assignedCourse(courseTitle,email);
+//  }
 
 }
